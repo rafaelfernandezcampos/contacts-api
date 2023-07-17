@@ -4,19 +4,19 @@ LABEL MAINTAINER="rafaelstz00@gmail.com"
 WORKDIR /usr/src/app
 COPY . /usr/src/app
 # Compile and package the application to an executable JAR
-CMD mvn package 
+RUN mvn package
 
-# Fetching latest version of Java
+# Second stage: Fetching latest version of Java and setting up the application
 FROM openjdk:18
- 
+
 # Setting up work directory
 WORKDIR /app
 
-# Copy the jar file into our app
-COPY ./target/contacts-api-1.0-SNAPSHOT.jar /app
+# Copy the jar file from the first stage into our app
+COPY --from=maven /usr/src/app/target/contacts-api-1.0-SNAPSHOT.jar /app
 
-# Exposing port 8000
+# Expose port 8000
 EXPOSE 8000
 
-# Starting the application
-ENTRYPOINT ["mvn", "java", "-jar", "contacts-api-1.0-SNAPSHOT.jar"]
+# Start the application
+CMD ["java", "-jar", "contacts-api-1.0-SNAPSHOT.jar"]
