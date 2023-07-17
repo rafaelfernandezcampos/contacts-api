@@ -1,3 +1,11 @@
+FROM maven:3.6.3 AS maven
+LABEL MAINTAINER="rafaelstz00@gmail.com"
+
+WORKDIR /usr/src/app
+COPY . /usr/src/app
+# Compile and package the application to an executable JAR
+RUN mvn package 
+
 # Fetching latest version of Java
 FROM openjdk:18
  
