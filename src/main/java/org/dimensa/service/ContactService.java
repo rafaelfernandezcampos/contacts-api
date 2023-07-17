@@ -7,11 +7,9 @@ import org.dimensa.payload.ContactModel;
 import org.dimensa.repository.AddressRepository;
 import org.dimensa.repository.ContactRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 import javax.persistence.EntityNotFoundException;
 
 
@@ -26,7 +24,6 @@ public class ContactService {
     }
 
     public List<Contact> findAll() {
-        System.out.println(contactRepository.findAll());
         return contactRepository.findAll();
     }
 
@@ -42,30 +39,49 @@ public class ContactService {
             contact.getBirth()
         );
 
+
         Contact createdContact = contactRepository.save(contactToSave);
 
         if(contact.getAddresses().size() > 0) {
             List<AddressModel> addresses = contact.getAddresses();
+            List<Address> addressesSaved = new ArrayList<>();
 
-            System.out.println(addresses);
             addresses.forEach(address -> {
                 Address addressToSave = new Address(address.getStreet(), address.getNumber(), address.getCep(), createdContact);
 
-                addressRepository.save(addressToSave);
+                addressesSaved.add(addressRepository.save(addressToSave));
             });
+
+            createdContact.setAddressList(addressesSaved);
         }
 
         return createdContact;
     }
 
+    @Transactional
     public void updateOne(long id, ContactModel contact) {
         Contact databaseContact = contactRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
-        databaseContact.setName(contact.getName());
-        databaseContact.setEmail(contact.getEmail());
-        databaseContact.setPhone(contact.getPhone());
-        databaseContact.setBirth(contact.getBirth());
+        if (contact.getName() != null)
+            databaseContact.setName(contact.getName());
+        if (contact.getEmail() != null)
+            databaseContact.setEmail(contact.getEmail());
+        if (contact.getPhone() != null)
+            databaseContact.setPhone(contact.getPhone());
+        if (contact.getBirth() != null)
+            databaseContact.setBirth(contact.getBirth());
 
+        if (contact.getAddresses().size() > 0) {
+            List<AddressModel> addresses = contact.getAddresses();
+
+            addresses.forEach(address -> {
+                addressRepository.deleteByContactId(databaseContact.getId());
+
+                Address addressToSave = new Address(address.getStreet(), address.getNumber(), address.getCep(), databaseContact);
+
+                addressRepository.save(addressToSave);
+            });
+        }
         contactRepository.save(databaseContact);
     }
 

@@ -1,6 +1,5 @@
 package org.dimensa.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -33,9 +32,17 @@ public class Contact extends BaseEntity {
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy="contact", fetch = FetchType.EAGER)
     @Fetch(value= FetchMode.SELECT)
-    private List<Address> addressList = new ArrayList<Address>();
+    private List<Address> addressList = new ArrayList<>();
 
     public Contact(String name, String email, String phone, LocalDateTime birth) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.birth = birth;
+    }
+
+    public Contact(Long id, String name, String email, String phone, LocalDateTime birth) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;

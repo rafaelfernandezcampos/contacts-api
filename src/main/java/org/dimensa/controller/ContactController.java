@@ -1,5 +1,6 @@
 package org.dimensa.controller;
 
+import io.swagger.annotations.ApiParam;
 import org.dimensa.entity.Contact;
 import org.dimensa.payload.ContactModel;
 import org.dimensa.service.ContactService;
@@ -33,8 +34,8 @@ public class ContactController {
         return new ResponseEntity<>(service.create(contact), HttpStatus.CREATED);
     }
 
-    @PutMapping("/id")
-    public void updateContact(@PathVariable("id") int id, @RequestBody ContactModel contact) {
+    @PutMapping("/{id}")
+    public void updateContact(@ApiParam(name = "id", value = "Id of the contact") @PathVariable("id") int id, @RequestBody ContactModel contact) {
         service.updateOne(id, contact);
     }
 
