@@ -1,10 +1,14 @@
-FROM maven:3.6.0-jdk-11-slim AS build
-COPY src /home/app/src
-COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package
-
-FROM openjdk:20
+# Fetching latest version of Java
+FROM openjdk:18
+ 
+# Setting up work directory
 WORKDIR /app
-COPY target/contacts-api-1.0-SNAPSHOT.jar /app/contacts-api.jar
+
+# Copy the jar file into our app
+COPY ./target/contacts-api-1.0-SNAPSHOT.jar /app
+
+# Exposing port 8000
 EXPOSE 8000
-ENTRYPOINT ["java", "-jar", "contacts-api.jar"]
+
+# Starting the application
+CMD ["java", "-jar", "contacts-api-1.0-SNAPSHOT.jar"]
