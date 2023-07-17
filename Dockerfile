@@ -19,4 +19,4 @@ COPY ./target/contacts-api-1.0-SNAPSHOT.jar /app
 EXPOSE 8000
 
 # Starting the application
-CMD ["java", "-jar", "contacts-api-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["mvn", "java", "-jar", "contacts-api-1.0-SNAPSHOT.jar"]
