@@ -11,12 +11,15 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * Class with the swagger configuration
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {
-
+    
     @Bean
-    public Docket docket(){
+    public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.dimensa.controller"))
@@ -32,8 +35,8 @@ public class SwaggerConfiguration {
                 .version("1.0.0")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
-                        .contact(new Contact("Rafael", "", "rafaelstz00@gmail.com"))
-                        .build();
+                .contact(new Contact("Rafael", "", "rafaelstz00@gmail.com"))
+                .build();
     }
 
 }

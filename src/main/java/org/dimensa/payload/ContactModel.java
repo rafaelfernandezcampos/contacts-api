@@ -58,4 +58,20 @@ public class ContactModel implements Serializable {
     public LocalDateTime getBirth() {
         return birth;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setBirth(LocalDateTime birth) {
+        this.birth = birth;
+    }
 }

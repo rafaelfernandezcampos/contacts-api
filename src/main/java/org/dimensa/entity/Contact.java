@@ -30,8 +30,8 @@ public class Contact extends BaseEntity {
     private LocalDateTime birth;
 
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="contact", fetch = FetchType.EAGER)
-    @Fetch(value= FetchMode.SELECT)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contact", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SELECT)
     private List<Address> addressList = new ArrayList<>();
 
     public Contact(String name, String email, String phone, LocalDateTime birth) {

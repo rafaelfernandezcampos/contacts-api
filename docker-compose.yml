@@ -1,0 +1,14 @@
+version: '1.0'
+services:
+  contacts-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: contacts-api
+    restart: always
+    ports:
+      - '8080:8080'
+    environment:
+      - SPRING_DATABASE_URL=jdbc:postgresql://dimensadb.crygwiotn2wx.us-east-1.rds.amazonaws.com:5432/dimensadb
+      - SPRING_DATABASE_USERNAME=dimensa
+      - SPRING_DATABASE_PASSWORD=senhadimensa123

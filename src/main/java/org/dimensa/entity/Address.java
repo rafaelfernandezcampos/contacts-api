@@ -23,7 +23,7 @@ public class Address extends BaseEntity {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="contact_id",nullable=false)
+    @JoinColumn(name = "contact_id", nullable = false)
     private Contact contact;
 
     public Address(String street, Integer number, String cep, Contact contact) {
