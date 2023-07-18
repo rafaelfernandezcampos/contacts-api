@@ -1,10 +1,5 @@
 package org.dimensa.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchException;
 import org.dimensa.entity.Address;
 import org.dimensa.entity.Contact;
 import org.dimensa.payload.AddressModel;
@@ -17,8 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.*;
-import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -105,7 +101,7 @@ public class ContactService {
 
         return createdContact;
     }
-    
+
     /**
      * Method to update a contact on database
      *
@@ -171,7 +167,8 @@ public class ContactService {
      * Method to update a field of contact on database
      *
      * @param id    of the contact
-     * @param patch field that will be updated
+     * @param key   field that will be updated
+     * @param value field value that will be updated
      */
     public Contact patchOne(long id, String key, String value) {
         Optional<Contact> optionalContact = contactRepository.findById(id);

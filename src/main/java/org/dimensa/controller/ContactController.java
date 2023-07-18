@@ -1,6 +1,5 @@
 package org.dimensa.controller;
 
-import com.github.fge.jsonpatch.JsonPatch;
 import io.swagger.annotations.ApiParam;
 import org.dimensa.entity.Contact;
 import org.dimensa.payload.ContactModel;
